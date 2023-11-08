@@ -5,3 +5,37 @@ body {
 .hidden {
   display: none;
 }
+
+.startBackground {
+  background-image:;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.secondBackground {
+  background-image: ;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.lastStageBackground {
+  background-image: ;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.gameOverBackground {
+  background-image: ;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.youWonBackground {
+  background-image: ;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}

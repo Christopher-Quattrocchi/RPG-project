@@ -22,18 +22,19 @@
       <option value="human-shrek">Human Shrek</option>
     </select>
     <p>Select your characters and begin the battle!</p>
-    <button type="submit">Select</button>
+    <button id="submit" type="submit">Select</button>
   </form>
 
   <div id="hold-character" class="hidden">
-    <img src="" alt="player-img">
+    <img id="character-img" src ="./assets/shrek.jpg" alt="player-img">
     <div id="character-stats" class="stat-holder">
       <p id="character-hp"></p>
+      <button type="button" id="attack">Attack</button>
     </div>
   </div>
 
   <div id="hold-enemy" class="hidden">
-    <img src="" alt="enemy-img">
+    <img id="enemy-img" src="./assets/farquaad.jpg" alt="enemy-img">
     <div id="enemy-stats" class="stat-holder">
       <p id="enemy-hp"></p>
     </div>
