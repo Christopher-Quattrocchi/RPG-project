@@ -1,12 +1,13 @@
 import { Character } from "./../src/js/RPG.js";
-
+// constructor(name, type, maxHealth, damage, finesse, actions)
 describe("Character", () => {
-  test("should create character object with 5 attributes", () => {
-    let character = new Character("Farquad", "Lord", 0, 0, "Run");
+  test("should create character object with 6 attributes", () => {
+    let character = new Character("Farquad", "Lord", 5, 2, 2, "Run");
     expect(character.name).toEqual("Farquad");
     expect(character.type).toEqual("Lord");
-    expect(character.health).toEqual(0);
-    expect(character.damage).toEqual(0);
+    expect(character.maxHealth).toEqual(5);
+    expect(character.damage).toEqual(2);
+    expect(character.finesse).toEqual(2);
     expect(character.actions).toEqual("Run");
     expect(character.isDead).toEqual(false);
   });
@@ -14,14 +15,30 @@ describe("Character", () => {
 
 describe("Attack", () => {
   test("Should determine whether a player hits and how much damage is inflicted", () => {
-    let character = new Character("Farquad", "Lord", 5, 2, "Attack");
-    let damage = character.Attack();
+    let character = new Character("Farquad", "Lord", 5, 2, 2, "Attack");
+    let target = new Character("Shrek", "Ogre", 10, 5, 2, "Attack");
+    let damage = character.Attack(target);
     
     expect(typeof damage).toBe('number');
   });
+
+  test("it should modify current health based off of roll damage", () => {
+    let target = new Character("Shrek", "Ogre", 10, 5, 2, "Attack");
+    let character = new Character("Farquad", "Lord", 50, 50, 5, "Attack");
+    let damage = character.Attack(target);
+    expect(typeof damage).toBe('number');
+    expect(target.Health()).toBe("you are almost dead");
+  })
 });
 
-describle("Health", ( =>)
+describe("Health", () => {
+  test("Should return health status", () => {
+    let character = new Character("Farquad", "Lord", 10, 2, 2, "Attack");
+    let healthMsg = character.Health()
+    expect(healthMsg).toEqual("you are healthy");
+  });
+});
+
 
 
 // import Triangle from "./../src/js/triangle.js";
@@ -53,4 +70,4 @@ describle("Health", ( =>)
 //   const equiTriangle = new Triangle(5, 5, 5);
 //   expect(equiTriangle.checkType()).toEqual("equilateral triangle");
 // });
-// });
+//;
