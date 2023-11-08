@@ -20,7 +20,7 @@ export class Character {
     } else if (toHit < 10) {
       rollDamage = 0;
     }
-    
+
     target.currentHealth -= rollDamage;
     if (target.currentHealth <= 0) {
       target.isDead = true;
@@ -52,12 +52,26 @@ export class Character {
 // let farquad = new Character("Farquad", "Lord", 100, 10, "Attack");
 // let target = new Character("Shrek", "Ogre", 200, 20, "Attack");
 // farquad.Attack(target);
-// console.log(target.Health());
+// console.log(target.Health());Player.prototype.updateScore = function () {//update score when player or computer chooses to hold
 
+function changePlayer() {//switch turns by flipping booleans, display whose turn it is
+  playerOne.playerTurn = !playerOne.playerTurn;
+  displayTurn();
+  if (playerTwo) {
+      playerTwo.playerTurn = !playerTwo.playerTurn;
+      displayTurn();
+  } else if (computerOpponent) {
+      computerOpponent.playerTurn = !computerOpponent.playerTurn;
+      computerStrategy();//check to see if this actually does something. currently it calls an async function without await
+      console.log("computerStrategy called in changePlayer");
+  }
+  displayTurn();
+}
 
-// const decideTurn () => {
-  
-// }
+const decideTurn = () => {
+  character.isTurn = !character.isTurn;
+  target.isTurn = !target.isTurn;
+}
 
 //const screenUpdate () => {
 
