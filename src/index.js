@@ -5,6 +5,8 @@ import "./css/styles.css";
 import Character from "./js/RPG.js";
 
 // src/index.js
+import defaultImageOne from "./assets/images/default-placeholder1.jpg";
+import defaultImageTwo from "./assets/images/default-placeholder2.jpg";
 import ShrekImage from './assets/images/shrek.jpg';
 import DonkeyImage from './assets/images/donkey.jpg';
 import FionaImage from './assets/images/ogre-fiona.jpg';
@@ -37,7 +39,7 @@ const characterImg = {
   "Shrek": ShrekImage,
   "Donkey": DonkeyImage,
   "Fiona": FionaImage,
-  "Puss In Boots": PussInBootsImage,
+  "Puss In Boots": PussInBootsImage
   // ... other characters
 }
 
@@ -45,7 +47,7 @@ const enemyImg = {
   "Lord Farquad": FarquadImage,
   "Dragon": DragonImage,
   "Prince Charming": PrinceCharmingImage,
-  "Human Shrek": HumanShrekImage,
+  "Human Shrek": HumanShrekImage
   // ... other enemies
 }
 
@@ -54,7 +56,7 @@ function handleForm(event) {
   event.preventDefault();
 
   //Troubleshooting
-  console.log(document.body.innerHTML);
+  // console.log(document.body.innerHTML);
   console.log(document.getElementById("character-img"));
   console.log(document.getElementById("enemy-img"));
 
@@ -173,13 +175,15 @@ function updateDisplay(holdCharacterDiv, holdEnemyDiv, player, enemy) {
 
 
   //Correct src path to be relative to location of index. I am broken currently
+  console.log("In update display, I shouldn't be null:", document.getElementById("character-img"));//Should not be null 
+  console.log("In update display, I shouldn't be null:", document.getElementById("enemy-img"));//Should not be null 
   const characterImgElement = document.getElementById("character-img");
   const enemyImgElement = document.getElementById("enemy-img");
 
 
   if (characterImgElement && enemyImgElement) {
-    characterImgElement.src = characterImg[player.name] || "assets/images/default-placeholder1.jpg";
-    enemyImgElement.src = enemyImg[enemy.name] || "assets/images/default-placeholder2.jpg";
+    characterImgElement.src = characterImg[player.name] || defaultImageOne;
+    enemyImgElement.src = enemyImg[enemy.name] || defaultImageTwo;
   } else {
     console.error("One of the images couldn't be found in DOM");
   }
