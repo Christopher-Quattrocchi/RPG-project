@@ -9,25 +9,25 @@
 
 <body>
   <h1>Shrek Scrap</h1>
-  <form>
+  <form id="character-form">
     <select name="select-character" id="select-character">
-      <option value="shrek">Shrek</option>
-      <option value="donkey">Donkey</option>
-      <option value="fiona">Fiona</option>
-      <option value="pussinboots">Puss In Boots</option>
+      <option value="Shrek">Shrek</option>
+      <option value="Donkey">Donkey</option>
+      <option value="Fiona">Fiona</option>
+      <option value="PussInBoots">Puss In Boots</option>
     </select>
     <select name="select-enemy" id="select-enemy">
-      <option value="lord-farquad">Lord Farquad</option>
-      <option value="dragon">Dragon</option>
-      <option value="prince-charming">Prince Charming</option>
-      <option value="human-shrek">Human Shrek</option>
+      <option value="LordFarquad">Lord Farquad</option>
+      <option value="Dragon">Dragon</option>
+      <option value="PrinceCharming">Prince Charming</option>
+      <option value="HumanShrek">Human Shrek</option>
     </select>
     <p>Select your characters and begin the battle!</p>
     <button id="submit" type="submit">Select</button>
   </form>
 
   <div id="hold-character" class="hidden">
-    <img id="character-img" src="" alt="player-img">
+    <img id="character-img" src="./assets/images/default-placeholder1.jpg" alt="player-img">
     <div id="character-stats" class="stat-holder">
       <p id="character-hp"></p>
       <button type="button" id="attack">Attack</button>
@@ -35,7 +35,7 @@
   </div>
 
   <div id="hold-enemy" class="hidden">
-    <img id="enemy-img" src="" alt="enemy-img">
+    <img id="enemy-img" src="./assets/images/default-placeholder2.jpg" alt="enemy-img">
     <div id="enemy-stats" class="stat-holder">
       <p id="enemy-hp"></p>
     </div>

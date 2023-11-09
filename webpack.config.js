@@ -40,7 +40,29 @@ module.exports = {
       },
       {
         test: /\.html$/,
-        use: ["html-loader"],
+        use: [
+          {
+            loader: "html-loader",
+            options: {
+              sources: {
+                list: [
+                  // All default supported tags and attributes
+                  "...",
+                  // Ignore img src attribute if it's empty
+                  {
+                    tag: "img",
+                    attribute: "src",
+                    type: "src",
+                    filter: (tag, attribute, attributes, resourcePath) => {
+                      // Only keep the img with src that is not empty
+                      return attributes.find(attr => attr.name === "src" && attr.value !== '');
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ],
       },
     ],
   },

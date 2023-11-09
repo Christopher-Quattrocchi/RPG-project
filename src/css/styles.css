@@ -7,7 +7,7 @@ body {
 }
 
 .startBackground {
-  background-image: ;
+  /* background-image: ; */
   background-size: cover;
   transition: 1.0s ease;
   background-position: center;
@@ -15,7 +15,7 @@ body {
 }
 
 .secondBackground {
-  background-image: ;
+  /* background-image: ; */
   background-size: cover;
   transition: 1.0s ease;
   background-position: center;
@@ -23,7 +23,7 @@ body {
 }
 
 .lastStageBackground {
-  background-image: ;
+  /* background-image: ; */
   background-size: cover;
   transition: 1.0s ease;
   background-position: center;
@@ -31,7 +31,7 @@ body {
 }
 
 .gameOverBackground {
-  background-image: ;
+  /* background-image: ; */
   background-size: cover;
   transition: 1.0s ease;
   background-position: center;
@@ -39,9 +39,22 @@ body {
 }
 
 .youWonBackground {
-  background-image: ;
+  /* background-image: ; */
   background-size: cover;
   transition: 1.0s ease;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+@keyframes shake {
+  0% { transform: translate(0px, 0px); }
+  25% { transform: translate(-5px, 0px); }
+  50% { transform: translate(5px, 0px); }
+  75% { transform: translate(-5px, 0px); }
+  100% { transform: translate(0px, 0px); }
+}
+
+.shake {
+  animation: shake 0.5s;
+  animation-iteration-count: 2; 
 }
