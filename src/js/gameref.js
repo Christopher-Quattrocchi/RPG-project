@@ -39,32 +39,32 @@ Player.prototype.diceRoll = async function () {
   showDice(roll1, roll2);
 
   if (roll1 === 1 && roll2 === 1) {//check for total wipeout
-      this.roundScore = 0;
-      this.totalScore = 0;
-      info.innerText = this.name + " got wiped out! Total set to 0";
-      await delay(1000);
-      updateDisplay(this, pTotal1, pRound1, pTotal2, pRound2);
-      info.innerText = "";
-      changePlayer();
+    this.roundScore = 0;
+    this.totalScore = 0;
+    info.innerText = this.name + " got wiped out! Total set to 0";
+    await delay(1000);
+    updateDisplay(this, pTotal1, pRound1, pTotal2, pRound2);
+    info.innerText = "";
+    changePlayer();
   } else if (roll1 === 1 || roll2 === 1) {//check for round wipeout
-      this.roundScore = 0;
-      info.innerText = this.name + " rolled a one. Bad luck!"
-      updateDisplay(this, pTotal1, pRound1, pTotal2, pRound2);
-      await delay(1000);
-      info.innerText = "";
-      changePlayer();
+    this.roundScore = 0;
+    info.innerText = this.name + " rolled a one. Bad luck!"
+    updateDisplay(this, pTotal1, pRound1, pTotal2, pRound2);
+    await delay(1000);
+    info.innerText = "";
+    changePlayer();
   } else if (roll1 === roll2) {//check for mandatory additional roll
-      this.roundScore = roll1 + roll2;
-      console.log("same number, should autoroll again");
-      info.innerText = "MATCH. Auto-roll";
-      updateDisplay(this, pTotal1, pRound1, pTotal2, pRound2);
-      await delay(1000);
-      this.diceRoll()
-      info.innerText = "";
-      await delay(1000);
+    this.roundScore = roll1 + roll2;
+    console.log("same number, should autoroll again");
+    info.innerText = "MATCH. Auto-roll";
+    updateDisplay(this, pTotal1, pRound1, pTotal2, pRound2);
+    await delay(1000);
+    this.diceRoll()
+    info.innerText = "";
+    await delay(1000);
   } else {//no special conditions
-      this.roundScore += roll1 + roll2;
-      updateDisplay(this, pTotal1, pRound1, pTotal2, pRound2);
+    this.roundScore += roll1 + roll2;
+    updateDisplay(this, pTotal1, pRound1, pTotal2, pRound2);
   }
 }
 
@@ -80,11 +80,11 @@ function showDice(roll1, roll2) {
 
 function updateDisplay(player, pTotal1, pRound1, pTotal2, pRound2) {//make sure that the current score is shown
   if (playerOne === player) {
-      pRound1.innerText = "Round Score: " + player.roundScore;
-      pTotal1.innerText = "Total Score: " + player.totalScore;
+    pRound1.innerText = "Round Score: " + player.roundScore;
+    pTotal1.innerText = "Total Score: " + player.totalScore;
   } else if (playerTwo === player || computerOpponent === player) {
-      pRound2.innerText = "Round Score: " + player.roundScore;
-      pTotal2.innerText = "Total Score: " + player.totalScore;
+    pRound2.innerText = "Round Score: " + player.roundScore;
+    pTotal2.innerText = "Total Score: " + player.totalScore;
   }
 }
 
@@ -98,12 +98,12 @@ function changePlayer() {//switch turns by flipping booleans, display whose turn
   playerOne.playerTurn = !playerOne.playerTurn;
   displayTurn();
   if (playerTwo) {
-      playerTwo.playerTurn = !playerTwo.playerTurn;
-      displayTurn();
+    playerTwo.playerTurn = !playerTwo.playerTurn;
+    displayTurn();
   } else if (computerOpponent) {
-      computerOpponent.playerTurn = !computerOpponent.playerTurn;
-      computerStrategy();//check to see if this actually does something. currently it calls an async function without await
-      console.log("computerStrategy called in changePlayer");
+    computerOpponent.playerTurn = !computerOpponent.playerTurn;
+    computerStrategy();//check to see if this actually does something. currently it calls an async function without await
+    console.log("computerStrategy called in changePlayer");
   }
   displayTurn();
 }
@@ -129,22 +129,22 @@ async function computerStrategy() {//defines computer player behavior
   console.log("should be disabled");
 
   while (computerOpponent.playerTurn && computerOpponent.totalScore < 100 && computerOpponent.roundScore < 18) {//while loop so the comp keeps rolling unless conditions are met
-      await computerOpponent.diceRoll();
-      updateDisplay(computerOpponent, pTotal1, pRound1, pTotal2, pRound2);
-      await delay(1000);
+    await computerOpponent.diceRoll();
+    updateDisplay(computerOpponent, pTotal1, pRound1, pTotal2, pRound2);
+    await delay(1000);
   }
   if (computerOpponent.roundScore >= 18) {//computer will hold if it has 18 or more current points
-      computerOpponent.updateScore();
-      updateDisplay(computerOpponent, pTotal1, pRound1, pTotal2, pRound2);
-      console.log("computer held, screen should be updated");
-      await delay(1000);
-      computerOpponent.victoryCheck();//check if comp won
-      if (computerOpponent.playerVictory) {
-          victory.innerText = computerOpponent.name + " Victory! Winner Winner Chicken Dinner!!";
-          hideMe.setAttribute("class", "hidden");
-      } else {
-          changePlayer();//if comp hasn't won, it becomes player turn
-      }
+    computerOpponent.updateScore();
+    updateDisplay(computerOpponent, pTotal1, pRound1, pTotal2, pRound2);
+    console.log("computer held, screen should be updated");
+    await delay(1000);
+    computerOpponent.victoryCheck();//check if comp won
+    if (computerOpponent.playerVictory) {
+      victory.innerText = computerOpponent.name + " Victory! Winner Winner Chicken Dinner!!";
+      hideMe.setAttribute("class", "hidden");
+    } else {
+      changePlayer();//if comp hasn't won, it becomes player turn
+    }
   }
   rollButton.disabled = false;//reenable buttons so player can click
   holdButton.disabled = false;
@@ -187,25 +187,25 @@ function createPlayer(e) {
   const p2 = document.getElementById("p2");
   const hideInstructions = document.getElementById("hideonplay");
   if (!playerOne) {//create player one
-      playerOne = new Player(name);
-      playerOne.playerTurn = true;
-      document.getElementById("computer-player").setAttribute("class", "hideme");
-      document.getElementById("create-button").innerText = "Create Player 2";
-      p1.innerText = "Player one: " + playerOne.name;
+    playerOne = new Player(name);
+    playerOne.playerTurn = true;
+    document.getElementById("computer-player").setAttribute("class", "hideme");
+    document.getElementById("create-button").innerText = "Create Player 2";
+    p1.innerText = "Player one: " + playerOne.name;
   } else if (!playerTwo) {//create player two
-      playerTwo = new Player(name);
-      p2.innerText = "Player two: " + playerTwo.name;
-      hideInstructions.setAttribute("class", "hidden");
-      hideForm.setAttribute("class", "hidden");
-      form.setAttribute("class", "not-hidden");
-      document.getElementById("computer-player").setAttribute("class", "hidden");
+    playerTwo = new Player(name);
+    p2.innerText = "Player two: " + playerTwo.name;
+    hideInstructions.setAttribute("class", "hidden");
+    hideForm.setAttribute("class", "hidden");
+    form.setAttribute("class", "not-hidden");
+    document.getElementById("computer-player").setAttribute("class", "hidden");
   } else {
-      console.log("Stop breaking stuff");//The user would have to use devltools to unhide the form to reach this
+    console.log("Stop breaking stuff");//The user would have to use devltools to unhide the form to reach this
   }
   if (playerOne.playerTurn === true) {//this code is probably unnecessary. see if it breaks without me later
-      pTurn.innerText = "It is " + playerOne.name + "'s turn";
+    pTurn.innerText = "It is " + playerOne.name + "'s turn";
   } else if (playerTwo.playerTurn === true) {
-      pTurn.innerText = "It is " + playerTwo.name + "'s turn";
+    pTurn.innerText = "It is " + playerTwo.name + "'s turn";
   }
 }
 
@@ -221,54 +221,54 @@ async function handleSubmission(e) {
   const victory = document.getElementById("victory");
 
   if (playerOne.playerTurn === true) {//logic that determines how a two player game works. later, try to refactor me so that I'm not all in this function
-      if (e.target === rollbutton) {
-          await playerOne.diceRoll();
-      } else if (e.target === holdbutton) {
-          playerOne.updateScore();
-          updateDisplay(playerOne, pTotal1, pRound1, pTotal2, pRound2);
-          playerOne.victoryCheck()
-          if (playerOne.playerVictory) {
-              victory.innerText = playerOne.name + " Victory! Winner Winner Chicken Dinner!!";
-              hideMe.setAttribute("class", "hidden");
-          } else {
-              changePlayer();
-          }
+    if (e.target === rollbutton) {
+      await playerOne.diceRoll();
+    } else if (e.target === holdbutton) {
+      playerOne.updateScore();
+      updateDisplay(playerOne, pTotal1, pRound1, pTotal2, pRound2);
+      playerOne.victoryCheck()
+      if (playerOne.playerVictory) {
+        victory.innerText = playerOne.name + " Victory! Winner Winner Chicken Dinner!!";
+        hideMe.setAttribute("class", "hidden");
+      } else {
+        changePlayer();
       }
+    }
   } else if (playerTwo && playerTwo.playerTurn === true) {
-      if (e.target === rollbutton) {
-          await playerTwo.diceRoll();
-      } else if (e.target === holdbutton) {
-          playerTwo.updateScore();
-          updateDisplay(playerTwo, pTotal1, pRound1, pTotal2, pRound2);
-          playerTwo.victoryCheck();
-          if (playerTwo.playerVictory) {
-              victory.innerText = playerTwo.name + " Victory! Winner Winner Chicken Dinner!!";
-              hideMe.setAttribute("class", "hidden");
-          } else {
-              changePlayer();
-          }
+    if (e.target === rollbutton) {
+      await playerTwo.diceRoll();
+    } else if (e.target === holdbutton) {
+      playerTwo.updateScore();
+      updateDisplay(playerTwo, pTotal1, pRound1, pTotal2, pRound2);
+      playerTwo.victoryCheck();
+      if (playerTwo.playerVictory) {
+        victory.innerText = playerTwo.name + " Victory! Winner Winner Chicken Dinner!!";
+        hideMe.setAttribute("class", "hidden");
+      } else {
+        changePlayer();
       }
+    }
   } else if (computerOpponent && computerOpponent.playerTurn) {//start comp strategy if computer game
-      computerStrategy();
-      console.log("computerStrategy called in handleSubmission");
+    computerStrategy();
+    console.log("computerStrategy called in handleSubmission");
   }
 }
 
 function displayTurn() {//show user which player is active
   const pTurn = document.getElementById("turn");
   if (playerOne.playerTurn) {
-      pTurn.innerText = "It is " + playerOne.name + "'s turn.";
+    pTurn.innerText = "It is " + playerOne.name + "'s turn.";
   } else if (playerTwo && playerTwo.playerTurn) {
-      pTurn.innerText = "It is " + playerTwo.name + "'s turn.";
+    pTurn.innerText = "It is " + playerTwo.name + "'s turn.";
   } else if (computerOpponent && computerOpponent.playerTurn) {
-      pTurn.innerText = "It is " + computerOpponent.name + "'s turn";
+    pTurn.innerText = "It is " + computerOpponent.name + "'s turn";
   }
 }
 
 Player.prototype.victoryCheck = function () {//check for victory
   if (this.totalScore >= 100) {
-      this.playerVictory = true;
+    this.playerVictory = true;
   } else {
-      this.playerVictory = false;
+    this.playerVictory = false;
   }
 }

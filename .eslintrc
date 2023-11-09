@@ -10,8 +10,8 @@
     "node": true
   },
   "rules": {
-    "semi": 1,
-    "indent": ["warn", 2],
+    "semi": 0,
+    "indent": ["warn", 0],
     "no-console": "warn",
     "no-debugger": "warn"
   }

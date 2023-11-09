@@ -58,4 +58,3 @@ describe("EnemyLogic", (character, target) => {
     expect(character.isTurn).toEqual(true);
   });
 });
-   

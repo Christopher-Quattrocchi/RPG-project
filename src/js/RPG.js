@@ -77,7 +77,7 @@ export class Character {
 //   return new Promise(resolve => setTimeout(resolve, ms));
 // }
 
-// async function computerStrategy() {//defines computer player behavior 
+// async function computerStrategy() {//defines computer player behavior
 //   if (!computerOpponent.playerTurn) return;
 //   const rollButton = document.getElementById("rollbutton");
 //   const holdButton = document.getElementById("holdbutton");

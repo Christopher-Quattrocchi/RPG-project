@@ -7,8 +7,9 @@ body {
 }
 
 .startBackground {
-  background-image:;
+  background-image: ;
   background-size: cover;
+  transition: 1.0s ease;
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -16,6 +17,7 @@ body {
 .secondBackground {
   background-image: ;
   background-size: cover;
+  transition: 1.0s ease;
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -23,6 +25,7 @@ body {
 .lastStageBackground {
   background-image: ;
   background-size: cover;
+  transition: 1.0s ease;
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -30,12 +33,15 @@ body {
 .gameOverBackground {
   background-image: ;
   background-size: cover;
+  transition: 1.0s ease;
   background-position: center;
   background-repeat: no-repeat;
 }
+
 .youWonBackground {
   background-image: ;
   background-size: cover;
+  transition: 1.0s ease;
   background-position: center;
   background-repeat: no-repeat;
 }

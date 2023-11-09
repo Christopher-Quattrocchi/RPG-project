@@ -4,7 +4,6 @@ import "./css/styles.css";
 import Character from "./js/RPG.js";
 
 document.getElementById("character-form").addEventListener("submit", handleForm);
-
 const characterImg = {
   "Shrek": "./assets/shrek.jpg",
   "Donkey": "./assets/donkey.jpg",
@@ -19,15 +18,17 @@ const enemyImg = {
   "Human Shrek": "./assets/human-shrek.jpg",
 }
 
-document.getElementById("character-img").src = characterImgUrl;
-document.getElementById("enemy-img").src = enemyImgUrl;
-
 function handleForm(event) {
   event.preventDefault();
   document.querySelector("#hold-character").innerText = null;
   document.querySelector("#hold-enemy").innerText = null;
+
   const character = (document.querySelector("#select-character").value);
   const enemy = (document.querySelector("#select-enemy").value);
+  //need logic to fill in character and enemy stats
+
+  // let myGame = new GameState(character, enemy)
+
   const hTag = document.createElement("p");
   const eTag = document.createElement("p");
   hTag.append('Your fighter is: ' + character);
@@ -36,21 +37,22 @@ function handleForm(event) {
   document.querySelector('#hold-enemy').append(eTag);
   document.querySelector('#hold-character').classList.remove("hidden");
   document.querySelector('#hold-enemy').classList.remove("hidden");
+
   const selectedEnemy = document.querySelector("#select-enemy").value;
   const enemyImgUrl = enemyImg[selectedEnemy] || "";
   const selectedCharacter = document.querySelector("#select-character").value;
   const characterImgUrl = characterImg[selectedCharacter] || "";
+
+  document.getElementById("character-img").src = characterImgUrl;
+  document.getElementById("enemy-img").src = enemyImgUrl;
 }
 
-//REFERENCE
-document.getElementById("computer-player").setAttribute("class", "hideme");
-//or
-const element = document.getElementById('yourElementId');
-element.className = 'hideme';
-//or
-const element = document.getElementById('yourElementId');
-element.classList.remove('hidden');
-element.classList.add('hideme');
+
+// function characterSelector() {
+//   let playerRENAMEME = new Character(FILL ME LATER);
+//   let enemyRENAMEME = new Character(FILL ME LATER;
+//     if ()
+// }
 
 function updateDisplay() {
 
