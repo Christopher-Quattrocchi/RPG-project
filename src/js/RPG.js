@@ -9,6 +9,7 @@ export default class Character {
     this.actions = actions;
     this.isDead = false;
     this.isTurn = false;
+    this.lastDamageDealt = 0;
   }
 
   Attack(target) {
@@ -26,13 +27,14 @@ export default class Character {
       target.isDead = true;
     }
 
+    this.lastDamageDealt = rollDamage;
     return rollDamage;
 
   }
 
   Health() {
     let percentHealth = (this.currentHealth / this.maxHealth * 100);
-    if (percentHealth === 0) {
+    if (percentHealth <= 0) {
       this.isDead = true;
       return "you are dead";
     } else if (percentHealth <= 20) {

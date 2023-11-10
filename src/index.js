@@ -16,24 +16,21 @@ import DragonImage from './assets/images/dragon.jpg';
 import PrinceCharmingImage from './assets/images/princecharming.jpg';
 import HumanShrekImage from './assets/images/human-shrek.jpg';
 // ... import other images as needed
+
+let myGame; //I AM GLOBAL!!
+
 document.addEventListener("DOMContentLoaded", function () {
   document.querySelector("#character-form").addEventListener("submit", handleForm);
 });
 
+//DELAY FUNCTION
+function delay(ms) {//so we can add delays more consistently than with setinterval which sucks
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-// const characterImg = {
-//   "Shrek": "./assets/shrek.jpg",
-//   "Donkey": "./assets/donkey.jpg",
-//   "Fiona": "./assets/ogre-fiona.jpg",
-//   "Puss In Boots": "./assets/pussinboots.jpg",
-// }
+// await delay(1000);   //SHOWS HOW TO USE IT
+//END DELAY FUNCTIOn
 
-// const enemyImg = {
-//   "Lord Farquad": "./assets/farquaad.jpg",
-//   "Dragon": "./assets/dragon.jpg",
-//   "Prince Charming": "./assets/princecharming.jpg",
-//   "Human Shrek": "./assets/human-shrek.jpg",
-// }
 
 const characterImg = {
   "Shrek": ShrekImage,
@@ -51,43 +48,76 @@ const enemyImg = {
   // ... other enemies
 }
 
-
 function handleForm(event) {
   event.preventDefault();
 
+  document.getElementById("character-form").setAttribute("class", "hidden");
+
   //Troubleshooting
-  // console.log(document.body.innerHTML);
   console.log(document.getElementById("character-img"));
   console.log(document.getElementById("enemy-img"));
 
   //Clear previous
   const holdCharacterDiv = document.querySelector("#hold-character");
   const holdEnemyDiv = document.querySelector("#hold-enemy");
-  holdCharacterDiv.innerText = "";
-  holdEnemyDiv.innerText = "";
+
 
   //Get character and enemy
   const selectedCharacter = (document.querySelector("#select-character").value);
-  const selectedEnemy = (document.querySelector("#select-enemy").value);
+  const player = characterSelector(selectedCharacter);
 
-  //Convert to match keys
-  // const characterKey = formatSelectionKey(selectedCharacter);
-  // const enemyKey = formatSelectionKey(selectedEnemy);
-
+  const enemySequence = [
+    new Character("Lord Farquad", "a man", 65, 10, 6, "Attack"),
+    new Character("Prince Charming", "a man", 90, 15, 4, "Attack"),
+    new Character("Human Shrek", "a man", 100, 15, 4, "Attack"),
+    new Character("Dragon", "a dragon", 220, 30, 0, "Attack")
+  ];
+  
+  // const selectedEnemy = (document.querySelector("#select-enemy").value);
 
   //Character selection logic
-  const isFinalEnemy = selectedEnemy === "dragon"
+  // const isFinalEnemy = selectedEnemy === "dragon"
 
-  //Debug stuff
-  // console.log("Character Key:", characterKey);
-  // console.log("Enemy Key:", enemyKey);
-
-  const { player, enemy } = characterSelector(selectedCharacter, selectedEnemy, isFinalEnemy);
+ 
   //Init game
-  let myGame = new GameState(player, enemy);
+  myGame = new GameState(player, enemySequence);
 
   //Update display
-  updateDisplay(holdCharacterDiv, holdEnemyDiv, player, enemy);
+  updateDisplay(holdCharacterDiv, holdEnemyDiv, player, myGame.enemy);
+
+  //attach attack handler to attack button after game start
+  document.querySelector("#attack").addEventListener("click", attackHandler);
+}
+
+
+async function attackHandler(event) {
+  event.preventDefault();
+
+  let attackButton = document.getElementById("attack");
+  attackButton.disabled = true;
+
+
+
+  console.log("I am the game", myGame);
+  const holdCharacterDiv = document.querySelector("#hold-character");
+  const holdEnemyDiv = document.querySelector("#hold-enemy");
+
+  myGame.player.Attack(myGame.enemy);
+
+  myGame.EndCheck();
+
+  updateDisplay(holdCharacterDiv, holdEnemyDiv, myGame.player, myGame.enemy);
+
+  if (myGame.enemy.isDead) {
+    const hasNextEnemy = myGame.nextEnemy();
+    if (hasNextEnemy) {
+      updateDisplay(holdCharacterDiv, holdEnemyDiv, myGame.player, myGame.enemy);
+    } else {
+      //victory stuff
+    }
+  }
+  await delay(5000);
+  attackButton.disabled = false;
 }
 
 // /////START SHAKE EFFECT
@@ -107,26 +137,13 @@ function handleForm(event) {
 // applyShakeEffect(enemyImageElement);
 // /////END SHAKE EFFECT
 
-
-// Helper function to format the selection key properly
-// function formatSelectionKey(selection) {
-//   // This will turn something like 'lord-farquad' into 'Lord Farquad'
-//   return selection.split('-')
-//     .map(part => part.charAt(0).toUpperCase() + part.slice(1))
-//     .join(' ');
-// }
-
-
-function characterSelector(characterName, enemyName, isFinalEnemy = false) {
+function characterSelector(characterName) {
   let player;
-  let enemy;
+  // let enemy;
 
-  //Use formatted name
-  // characterName = formatSelectionKey(characterName);
-  // enemyName = formatSelectionKey(enemyName);
   //help
   console.log("In char select, characterName is:", characterName);
-  console.log("In char select, enemyName is:", enemyName);
+  // console.log("In char select, enemyName is:", enemyName);
 
   if (characterName === "Shrek") {
     player = new Character("Shrek", "an ogre", 120, 20, 1, "Attack");
@@ -138,48 +155,72 @@ function characterSelector(characterName, enemyName, isFinalEnemy = false) {
     player = new Character("Puss In Boots", "a cat", 75, 15, 5, "Attack");
   }
 
-  if (isFinalEnemy) {
-    enemy = new Character("Dragon", "a dragon", 220, 30, 0, "Attack");
-  } else if (enemyName === "LordFarquad") {
-    enemy = new Character("Lord Farquad", "a man", 65, 10, 6, "Attack");
-  } else if (enemyName === "PrinceCharming") {
-    enemy = new Character("Prince Charming", "a man", 90, 15, 4, "Attack");
-  } else if (enemyName === "HumanShrek") {
-    enemy = new Character("Human Shrek", "a man", 100, 15, 4, "Attack");
-  }
+  console.log("Created player:", player);
+
+  // if (currentEnemyIndex === 0) {
+  //   enemy = new Character("Lord Farquad", "a man", 65, 10, 6, "Attack");
+  // } else if (currentEnemyIndex === 1) {
+  //   enemy = new Character("Prince Charming", "a man", 90, 15, 4, "Attack");
+  // } else if (currentEnemyIndex === 2) {
+  //   enemy = new Character("Human Shrek", "a man", 100, 15, 4, "Attack");
+  // } else {
+  //   enemy = new Character("Dragon", "a dragon", 220, 30, 0, "Attack");
+  // }
+
   //help
   console.log("Created player:", player);
-  console.log("Created enemy:", enemy);
+  // console.log("Created enemy:", enemy);
 
-  return { player, enemy };
-
+  return player;
 }
 
-function updateDisplay(holdCharacterDiv, holdEnemyDiv, player, enemy) {
+async function updateDisplay(holdCharacterDiv, holdEnemyDiv, player, enemy) {
   console.log("Player:", player);
   console.log("Enemy:", enemy);
+  const playerDamage = document.getElementById("player-damage");
+  const enemyDamage = document.getElementById("enemy-damage");
+
+  //DISPLAY DAMAGE
+  playerDamage.innerText = `You were hit for ${enemy.lastDamageDealt}`;
+  await delay(1000);
+  playerDamage.innerText = "";
+
+  enemyDamage.innerText = `${myGame.enemy.name} was hit for ${player.lastDamageDealt}`;
+  await delay(1000);
+  enemyDamage.innerText = "";
+  
   if (!player || !enemy) {
     console.error("Invalid player or enemy object");
     return;
   }
   //Text content set to something
-  const hTag = document.createElement("p");
-  const eTag = document.createElement("p");
-  hTag.textContent = 'Your fighter is: ' + player.name;
-  eTag.textContent = 'Your enemy is: ' + enemy.name;
-  holdCharacterDiv.appendChild(hTag);
-  holdEnemyDiv.appendChild(eTag);
+  const hTag = document.getElementById("playerName");
+  const eTag = document.getElementById("enemyName");
+  console.log("I check if hTag and eTag are there", hTag, eTag);
+  
+  hTag.innerText = `Your fighter is: ${player.name}`;
+  eTag.innerText = `Your enemy is: ${enemy.name}`;
 
   holdCharacterDiv.classList.remove("hidden");
   holdEnemyDiv.classList.remove("hidden");
 
+  const playerStats = document.getElementById("character-stats");
+  const enemyStats = document.getElementById("enemy-stats");
+  const playerHp = document.getElementById("character-hp");
+  const enemyHp = document.getElementById("enemy-hp");
+  //help
+  console.log("I check if stats are there", playerStats, enemyStats, playerHp, enemyHp);
 
-  //Correct src path to be relative to location of index. I am broken currently
+  playerStats.innerText = `Your damage is: ${player.damage}, your finesse is ${player.finesse}`;
+  enemyStats.innerText = `Enemy damage is: ${enemy.damage}, enemy finesse is ${enemy.finesse}`;
+  playerHp.innerText = `Your health is ${player.currentHealth}`;
+  enemyHp.innerText = `${enemy.name}'s health is ${enemy.currentHealth}`;
+
+  //Correct src path to be relative to location of index.
   console.log("In update display, I shouldn't be null:", document.getElementById("character-img"));//Should not be null 
   console.log("In update display, I shouldn't be null:", document.getElementById("enemy-img"));//Should not be null 
   const characterImgElement = document.getElementById("character-img");
   const enemyImgElement = document.getElementById("enemy-img");
-
 
   if (characterImgElement && enemyImgElement) {
     characterImgElement.src = characterImg[player.name] || defaultImageOne;
@@ -187,14 +228,24 @@ function updateDisplay(holdCharacterDiv, holdEnemyDiv, player, enemy) {
   } else {
     console.error("One of the images couldn't be found in DOM");
   }
-
 }
 
 class GameState {
-  constructor(player, enemy) {
+  constructor(player, enemies, currentEnemyIndex = 0) {
     this.stages = [true, false, false, false];
     this.player = player;
-    this.enemy = enemy;
+    this.enemies = enemies;
+    this.currentEnemyIndex = 0;
+    this.enemy = enemies[this.currentEnemyIndex];
+  }
+
+  nextEnemy() {
+    this.currentEnemyIndex++
+    if (this.currentEnemyIndex < this.enemies.length) {
+      this.enemy = this.enemies[this.currentEnemyIndex];
+      return true;
+    }
+    return false;
   }
 
   StageSwitch() {
@@ -203,20 +254,10 @@ class GameState {
       this.stages.fill(false);
       this.stages[nextStageIndex] = true;
     }
-    // if (stageOne && !stageFour) {
-    //   stageOne = false;
-    //   stageTwo = true;
-    // } else if (stageTwo && !stageFour) {
-    //   stageTwo = false;
-    //   stageThree = true;
-    // } else if (stageThree && !stageFour) {
-    //   stageThree = false;
-    //   stageFour = true;
-    // }
   }
 
   EndCheck() {
-    if (this.character.isDead) {
+    if (this.player.isDead) {
       // death screen
     } else if (this.enemy.isDead) {
       this.StageSwitch();
@@ -229,10 +270,3 @@ class GameState {
 }
 
 
-//DELAY FUNCTION
-function delay(ms) {//so we can add delays more consistently than with setinterval which sucks
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-// await delay(1000);   //SHOWS HOW TO USE IT
-//END DELAY FUNCTIOn

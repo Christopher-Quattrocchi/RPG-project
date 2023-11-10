@@ -7,7 +7,7 @@ body {
 }
 
 .startBackground {
-  /* background-image: ; */
+  background-image: "assets/images/castle-courtyard.jpg";
   background-size: cover;
   transition: 1.0s ease;
   background-position: center;
@@ -58,3 +58,9 @@ body {
   animation: shake 0.5s;
   animation-iteration-count: 2; 
 }
+
+img {
+  width: 10%;
+  height: auto;
+}
+
